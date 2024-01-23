@@ -8,7 +8,12 @@ class CsvWriter:
         self.filename = filename
         self.headers = headers
 
-        # write the headers to the CSV file
+        # Check if the file exists
+        if not os.path.isfile(self.filename):
+            # If not, create the file
+            open(self.filename, 'w').close()
+
+        # Now you can open the file without worrying about FileNotFoundError
         with open(self.filename, 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S')] + self.headers)
